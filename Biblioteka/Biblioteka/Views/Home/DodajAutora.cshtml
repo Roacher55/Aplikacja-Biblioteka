@@ -1,0 +1,25 @@
+﻿@model AutorKsiazki
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+<h3>Dodaj Autora</h3>
+@using (Html.BeginForm("DodajAutora", "Home"))
+{
+    
+    <p>Imię: </p>
+    <p>@Html.TextBoxFor(x => x.ImieAutora)</p>
+
+    <p>Nazwisko: </p>
+    <p>@Html.TextBoxFor(x => x.NazwiskoAutora)</p>
+
+
+
+    <input type="submit" value="Dodaj Autora" />
+}
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>

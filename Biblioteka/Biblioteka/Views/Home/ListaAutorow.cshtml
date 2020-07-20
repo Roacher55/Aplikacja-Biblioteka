@@ -1,0 +1,28 @@
+﻿@model List<AutorKsiazki>
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+
+<h2>Lista Autorów</h2>
+<table class="table table-hover">
+    <tbody>
+
+        @foreach (var a in Model)
+        {
+        <tr>
+            <td> Imię: @a.ImieAutora </td>
+            <td> Nazwisko: @a.NazwiskoAutora</td>
+            <td> <button type="button" onclick="location.href='@Url.Action("KsiazkiAutora", "Home", a)'">Książki</button></td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>

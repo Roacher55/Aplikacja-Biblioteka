@@ -1,0 +1,114 @@
+﻿@model List<Pracownik>
+@{
+    Layout = null;
+
+     if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+<button onclick="uprawnienia()" >Kierwonicy biblioteki</button>
+<button onclick="nieUprawnienia()">Bibliotekarze</button>
+<h3>Lista Pracowników</h3>
+
+<h3 id="tytulUprawnienia"></h3>
+<table class="table table-hover">
+    <tbody>
+
+        @foreach (var p in Model)
+        {
+        <tr>
+            <td id="imie"> Imię: @p.ImiePracownika </td>
+            <td id="nazwisko"> Nazwisko: @p.NazwiskoPracownika</td>
+
+            @if (p.CzyZalogowanyPracownik == true)
+            {
+                <td  id="uprawniony">Uprawniony</td>
+
+            }
+            else
+            {
+                <td  id="uprawniony">Nie Uprawniony</td>
+
+            }
+        <td hidden id="uprawnienieWartosc">@p.CzyZalogowanyPracownik</td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+    <form action="https://localhost:44329/Home/Glowna">
+        <input type="submit" value="Główna" />
+    </form>
+<script>
+
+    
+    function uprawnienia() {
+        let a = document.querySelectorAll('[id=imie]');
+       
+        let b = document.querySelectorAll('[id=nazwisko]');
+
+        let c = document.querySelectorAll('[id=uprawniony]');
+
+        let d = document.querySelectorAll('[id=uprawnienieWartosc]');
+
+
+        
+
+        for (let i = 0; i < a.length; i++)
+        {
+            if (d[i].innerHTML == "False") {
+                a[i].hidden = true;
+                b[i].hidden = true;
+                c[i].hidden = true;
+              //  d[i].hidden = true;
+
+                
+            }
+            else {
+            a[i].removeAttribute("hidden");
+            b[i].removeAttribute("hidden");
+            c[i].removeAttribute("hidden");
+
+         
+            }
+            console.log("dziala");
+            console.log(c[i].innerHTML);
+            console.log(c[i].valueL);
+        }
+        
+        document.getElementById("tytulUprawnienia").innerText = "Pracownicy mogący dodawać osoby";
+       
+    }
+
+    function nieUprawnienia() {
+        let a = document.querySelectorAll('[id=imie]');
+       
+        let b = document.querySelectorAll('[id=nazwisko]');
+        let c = document.querySelectorAll('[id=uprawniony]');
+      
+        
+        let d = document.querySelectorAll('[id=uprawnienieWartosc]');
+        
+
+        for (let i = 0; i < a.length; i++)
+        {
+            if (d[i].innerHTML == "True") {
+                a[i].hidden = true;
+                b[i].hidden = true;
+                c[i].hidden = true;
+            }
+            else {
+            a[i].removeAttribute("hidden");
+            b[i].removeAttribute("hidden");
+            c[i].removeAttribute("hidden");
+            
+            }
+        }
+        
+        document.getElementById("tytulUprawnienia").innerText = "Pracownicy nie mogący dodawać osoby";
+       
+    }
+</script>

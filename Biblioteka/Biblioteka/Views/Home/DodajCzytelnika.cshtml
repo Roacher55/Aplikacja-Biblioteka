@@ -1,0 +1,25 @@
+﻿@model Czytelnik
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+<h3>Dodaj Czytelnika</h3>
+@using (Html.BeginForm("DodajCzytelnika", "Home"))
+{
+
+    <p>Imię: </p>
+    <p>@Html.TextBoxFor(x => x.ImieCzytelnika)</p>
+
+    <p>Nazwisko: </p>
+    <p>@Html.TextBoxFor(x => x.NazwiskoCzytelnika)</p>
+    
+    
+
+    <input type="submit" value="Dodaj Czytelnika" />
+}
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>

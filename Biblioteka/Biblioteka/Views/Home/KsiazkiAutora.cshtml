@@ -1,0 +1,38 @@
+﻿@model List<Ksiazka>
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+
+<!DOCTYPE html>
+@foreach (var k in Model)
+{
+
+    
+<h3>Lista książek należących do Autora: @k.AutorKsiazki.ImieAutora @k.AutorKsiazki.NazwiskoAutora</h3>
+    break;
+
+}
+
+<table class="table table-hover">
+    <tbody>
+
+        @foreach (var k in Model)
+        {
+
+            <tr>
+                
+                <td> Tytuł: @k.TytulKsiazki</td>
+                <td> Sygnatura: @k.Sygnatura </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>

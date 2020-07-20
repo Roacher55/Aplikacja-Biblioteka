@@ -1,0 +1,254 @@
+﻿@model Biblioteka.Models.Wypozyczenie
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+
+   
+
+}
+<h3>Dodaj Wypożyczenie</h3>
+@using (Html.BeginForm("DodajWypozyczenie", "Home"))
+{
+    <p id="pracownik"></p>
+    <p hidden id="pracownikDane">@Html.TextBoxFor(x => x.WypozyczenieKsiazki.PracownikKluczObcyId)</p>
+
+    <p hidden id="daneCzytelnika"></p>
+    <p hidden id="idCzytelnika">@Html.TextBoxFor(x => x.WypozyczenieKsiazki.CzytelnikKluczObcyId)</p>
+
+    <p hidden id="daneKsiazka"></p>
+    <p hidden id="idKsiazka">@Html.TextBoxFor(x => x.WypozyczenieKsiazki.KsiazkaKluczObcyId)</p>
+    <p hidden id="aktualnieWypozyczona">@Html.TextBoxFor(x => x.WypozyczenieKsiazki.CzyAktualnieWypozyczona)</p>
+
+    <input type="submit" value="Dodaj Wypożyczenie" />
+}
+
+<p>Czytelnik</p>
+<p>Imie Czytelnika:</p>
+<input id="szukajImie" />
+<p>Nazwisko Czytelnika:</p>
+<input id="szukajNazwisko" />
+<p></p>
+<button onclick="znajdzCzytelnika()">Znajdź Czytelnika</button>
+
+<div id="czytelnicy"></div>
+
+
+<p>Książka</p>
+<p>Tytuł książki:</p>
+<input id="szukajTytuł" />
+<p>Sygnatura książki:</p>
+<input id="szukajSygnatura" />
+<p></p>
+<button onclick="znajdzKsiazka()">Znajdź Książke</button>
+
+<div id="ksiazki"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    document.getElementById("aktualnieWypozyczona").firstChild.value = true;
+    var IdPracownika = '@Session["IdPracownika"]'.toString();
+
+    var model = @Html.Raw(Json.Encode(Model));
+    for (var p of model.ListaPracownik) {
+
+        if (p.IdPracownika == IdPracownika) {
+            document.getElementById("pracownik").innerHTML = "Pracownik wypożyczający " + p.ImiePracownika + " " + p.NazwiskoPracownika;
+            document.getElementById("pracownikDane").firstChild.value = p.IdPracownika;
+        }
+    }
+
+
+    function znajdzCzytelnika() {
+
+        wyczyscCzytelnik();
+        var imie = document.getElementById("szukajImie").value;
+        var nazwisko = document.getElementById("szukajNazwisko").value;
+
+        //  document.getElementById("czyWypozyczona").innerHTML = false;
+
+        var text = "<p></p>";
+        var czytelnik = @Html.Raw(Json.Encode(Model));
+
+        for (var c of czytelnik.ListaCzytelnik) {
+            if ((c.ImieCzytelnika == imie && nazwisko == "") ||
+                (imie == "" && c.NazwiskoCzytelnika == nazwisko) ||
+                c.ImieCzytelnika == imie && c.NazwiskoCzytelnika == nazwisko) {
+                var g = document.createElement('BUTTON');
+                g.setAttribute("id", c.IdCzytelnik);
+
+                g.innerText = "Czytelnik " + c.ImieCzytelnika + " " + c.NazwiskoCzytelnika;
+
+                g.addEventListener("click", function (e) {
+                    // console.log(e.target);
+                    //  console.log(e.target.id);
+                    dodajCzytelnika(e.target.id, e.target.innerText)
+                });
+
+                document.getElementById("czytelnicy").appendChild(g);
+
+
+                var br = document.createElement("br");
+                document.getElementById("czytelnicy").appendChild(br);
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+        }
+    }
+
+        function znajdzKsiazka() {
+            wyczyscKsiazka();
+            var imie = document.getElementById("szukajTytuł").value;
+            var nazwisko = document.getElementById("szukajSygnatura").value;
+
+            //  document.getElementById("czyWypozyczona").innerHTML = false;
+
+            var text = "<p></p>";
+            var ksiazka = @Html.Raw(Json.Encode(Model));
+
+            for (var k of ksiazka.ListaKsiazka) {
+                if ((k.TytulKsiazki == imie && nazwisko == "" && k.CZyKsiazkaWypozyczona == false) ||
+                    (imie == "" && k.Sygnatura == nazwisko && k.CZyKsiazkaWypozyczona == false) ||
+                    k.TytulKsiazki == imie && k.Sygnatura == nazwisko && k.CZyKsiazkaWypozyczona == false) {
+                    var g = document.createElement('BUTTON');
+                    g.setAttribute("id", k.IdKsiazki);
+
+                    g.innerText = "Książka " + k.TytulKsiazki + ", Sygnatutra " + k.Sygnatura;
+
+                    g.addEventListener("click", function (e) {
+                        // console.log(e.target);
+                        //  console.log(e.target.id);
+                        dodajKsiazka(e.target.id, e.target.innerText)
+                    });
+
+                    document.getElementById("ksiazki").appendChild(g);
+
+
+                    var br = document.createElement("br");
+                    document.getElementById("ksiazki").appendChild(br);
+
+
+
+
+
+
+
+
+                }
+
+
+
+
+
+            }
+
+
+
+        }
+        function wyczyscCzytelnik() {
+            var nodes = document.querySelectorAll('[id=czytelnicy]');
+            // var nodes = document.getElementsByTagName('div');
+            //  console.log(document.getElementsByTagName('div').length);
+            //  console.log(document.querySelectorAll('[id=czytelnicy]').length);
+            //  console.log(document.querySelector('[id=czytelnicy]').length);
+            for (var i = 0, len = nodes.length; i < len; i++) {
+
+                var node = nodes[i];
+
+                while (node.firstChild) {
+
+                    node.removeChild(node.firstChild);
+
+                }
+            }
+        }
+
+        function wyczyscKsiazka() {
+            var nodes = document.querySelectorAll('[id=ksiazki]');
+            // var nodes = document.getElementsByTagName('div');
+            //  console.log(document.getElementsByTagName('div').length);
+            //  console.log(document.querySelectorAll('[id=czytelnicy]').length);
+            //  console.log(document.querySelector('[id=czytelnicy]').length);
+            for (var i = 0, len = nodes.length; i < len; i++) {
+
+                var node = nodes[i];
+
+                while (node.firstChild) {
+
+                    node.removeChild(node.firstChild);
+
+                }
+            }
+        }
+
+
+
+
+        function dodajCzytelnika(id, imieNazwisko) {
+            document.getElementById("daneCzytelnika").hidden = false;
+            document.getElementById("daneCzytelnika").innerHTML =  "Dodano id Czytelnika " + "<br />" + imieNazwisko;
+
+            // document.getElementById("idAutora").innerHTML = id;
+            document.getElementById("idCzytelnika").firstChild.value = id;
+
+            //  console.log(document.getElementById("czyWypozyczona").value);
+            // console.log(document.getElementById("idAutora"));
+
+        }
+
+
+    function dodajKsiazka(id, nazwa) {
+        document.getElementById("daneKsiazka").hidden = false;
+        document.getElementById("daneKsiazka").innerHTML = "Dodano id Ksiazki " + "<br />" +  nazwa ;
+
+        // document.getElementById("idAutora").innerHTML = id;
+        document.getElementById("idKsiazka").firstChild.value = id;
+
+        //  console.log(document.getElementById("czyWypozyczona").value);
+        // console.log(document.getElementById("idAutora"));
+
+    }
+
+
+
+</script>

@@ -1,0 +1,73 @@
+﻿@model Pracownik
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+    if(Session["Uprawnienia"].ToString() == "False")
+    {
+        Response.Redirect("~/Home/Glowna");
+    }
+}
+<h3>Dodaj Pracownika</h3>
+@using (Html.BeginForm("DodajPracownika", "Home"))
+{
+
+    <p>Imię: </p>
+    <p>@Html.TextBoxFor(x => x.ImiePracownika)</p>
+
+    <p>Nazwisko: </p>
+    <p>@Html.TextBoxFor(x => x.NazwiskoPracownika)</p>
+
+    <p>Czy nowy pracownik ma mieć uprawnienia d dodawania nowych pracowników?</p>
+    <label><input id="tak" onchange="takFunkcja()" type="checkbox"> Tak</label>
+    <br />
+    <label><input id="nie" onchange="nieFunkcja()" type="checkbox" checked>Nie</label>
+    <br />
+
+    <p>Ustaw Hasło: </p>
+    <p id="nowehaslo">@Html.PasswordFor(x => x.HasloPracownika, new { id = "CzytelnikId", onchange = "poprawneHaslo();" })</p>
+    <p>Powierdz Hasło: </p>
+    <input type="password" onchange="poprawneHaslo()" name="haslo" id="haslo">
+
+    <br />
+    <p hidden id="prawa">@Html.TextBoxFor(x => x.CzyZalogowanyPracownik)</p>
+
+    <input disabled type="submit" id="potwierdzenie" value="Dodaj Pracownika" />
+}
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
+<script>
+    document.getElementById("prawa").firstChild.value = false;
+    function takFunkcja() {
+        document.getElementById("tak").checked = true;
+        document.getElementById("prawa").firstChild.value = true;
+        document.getElementById("nie").checked = false;
+
+    }
+    function nieFunkcja() {
+        document.getElementById("nie").checked = true;
+        document.getElementById("prawa").firstChild.value = false;
+        document.getElementById("tak").checked = false;
+
+    }
+
+    var haslo = document.getElementById('haslo')
+    var haslo2 = document.getElementById("CzytelnikId");
+    function poprawneHaslo() {
+
+        if (haslo.value == haslo2.value && haslo.value != null && haslo2.value != null) {
+            document.getElementById("potwierdzenie").disabled = false;
+           
+        }
+        else
+         {
+            document.getElementById("potwierdzenie").disabled = true;
+          
+        }
+
+        
+    }
+</script>

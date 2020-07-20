@@ -1,0 +1,52 @@
+﻿@model Pracownik
+@{
+    Layout = null;
+
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+    
+}
+
+@using (Html.BeginForm("ZmienHaslo", "Home"))
+{
+
+
+    <p>Nowe Hasło: </p>
+    <p id="nowehaslo">@Html.PasswordFor(x => x.HasloPracownika, new { id = "CzytelnikId", onchange="poprawneHaslo();" })</p>
+    <p>Powierdz Hasło: </p>
+    <input type="password" onchange="poprawneHaslo()" name="haslo" id="haslo" >
+   
+    <p></p>    
+
+    <input disabled id="potwierdzenie"  type="submit" value="Zmień Hasło" />
+
+}
+
+<p></p>
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
+
+<script>
+    
+    var haslo = document.getElementById('haslo')
+    var haslo2 = document.getElementById("CzytelnikId");
+    function poprawneHaslo() {
+
+        if (haslo.value == haslo2.value && haslo.value != null && haslo2.value != null) {
+            document.getElementById("potwierdzenie").disabled = false;
+           
+        }
+        else
+         {
+            document.getElementById("potwierdzenie").disabled = true;
+          
+        }
+
+        
+    }
+
+    
+</script>

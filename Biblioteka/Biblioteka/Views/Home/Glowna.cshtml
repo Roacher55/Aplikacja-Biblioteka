@@ -1,0 +1,58 @@
+﻿
+@{
+  //  ViewBag.Title = "Pracownik";
+
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+
+
+<h3>Menu Główne @Session["Zalogowany"]</h3>
+
+
+
+
+<p></p>
+
+<form action="https://localhost:44329/Home/ListaWypozyczen">
+    <input  type="submit" value="Lista Wypozyczen" />
+</form>
+<form action="https://localhost:44329/Home/DodajWypozyczenie">
+    <input type="submit" value="Dodaj Wypozyczenie" />
+</form>
+<form action="https://localhost:44329/Home/ListaCzytelnikow">
+    <input type="submit" value="Lista Czytelników" />
+</form>
+<form action="https://localhost:44329/Home/DodajCzytelnika">
+    <input type="submit" value="Dodaj Czytelnika" />
+</form>
+<form action="https://localhost:44329/Home/ListaAutorow">
+    <input type="submit" value="Lista Autorów książek" />
+</form>
+<form action="https://localhost:44329/Home/DodajAutora">
+    <input type="submit" value="Dodaj autora książki" />
+</form>
+<form action="https://localhost:44329/Home/ListaKsiazek">
+    <input type="submit" value="Lista książek" />
+</form>
+<form action="https://localhost:44329/Home/DodajKsiazka">
+    <input type="submit" value="Dodaj Książke" />
+</form>
+<form action="https://localhost:44329/Home/ListaPracownikow">
+    <input type="submit" value="Lista pracowników" />
+</form>
+@if(Session["Uprawnienia"].ToString() == "True")
+{ 
+<form action="https://localhost:44329/Home/DodajPracownika">
+    <input type="submit" value="Dodaj pracownika" />
+</form>
+}
+<form action="https://localhost:44329/Home/ZmienHaslo">
+    <input type="submit" value="Zmien Hasło" />
+</form>
+<form action="https://localhost:44329/Home/LoGout">
+    <input type="submit" value="Wyloguj" />
+</form>
+

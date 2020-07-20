@@ -1,0 +1,108 @@
+﻿@model List<Ksiazka>
+@{
+    Layout = null;
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+
+    
+
+}
+
+
+<h2>Lista Książek</h2>
+
+<button onclick="wypozyczona()">Książki wypożyczone</button>
+<button onclick="nieWypozyczona()">Książka nie wypożyczona</button>
+<h3  id="status" ></h3>
+<table class="table table-hover">
+    <tbody >
+
+      
+
+        @foreach (var k in Model)
+        {
+
+            <tr>
+                <td class="tytul" > Tytuł: @k.TytulKsiazki  </td>
+                <td class="sygnatura" > Sygnatura: @k.Sygnatura</td>
+                <td hidden class="czyWypozyczona">@k.CZyKsiazkaWypozyczona</td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
+
+     
+
+
+
+
+<script>
+
+    
+
+
+
+    function wypozyczona() {
+        let a = document.querySelectorAll('[class=tytul]');
+       
+        let b = document.querySelectorAll('[class=sygnatura]');
+
+        let c = document.querySelectorAll('[class=czyWypozyczona]');
+        
+
+        for (let i = 0; i < a.length; i++)
+        {
+            if (c[i].innerHTML == "False") {
+                a[i].hidden = true;
+                b[i].hidden = true;
+            }
+            else {
+            a[i].removeAttribute("hidden");
+            b[i].removeAttribute("hidden");
+            }
+        }
+        document.getElementById("status").innerText = "Książki Wypożyczone";
+       
+    }
+
+    function nieWypozyczona() {
+        let a = document.querySelectorAll('[class=tytul]');
+      
+        let b = document.querySelectorAll('[class=sygnatura]');
+
+        let c = document.querySelectorAll('[class=czyWypozyczona]');
+        
+        for (let i = 0; i < a.length; i++)
+        {
+            if (c[i].innerHTML == "True") {
+                a[i].hidden = true;
+                b[i].hidden = true;
+            }
+            else {
+            a[i].removeAttribute("hidden");
+            b[i].removeAttribute("hidden");
+            }
+        }
+
+        document.getElementById("status").innerText = "Książki Nie Wypożyczone";
+         
+    }
+    
+
+   
+    
+
+
+
+
+
+
+</script>

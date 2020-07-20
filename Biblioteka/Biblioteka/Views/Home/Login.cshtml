@@ -1,0 +1,19 @@
+﻿@model Pracownik
+@{
+    Layout = null;
+}
+
+<h3>Logowanie</h3>
+@using (Html.BeginForm("Login", "Home"))
+{
+
+    <p>Imię </p>
+    <p>@Html.TextBoxFor(x => x.ImiePracownika)</p>
+
+    <p>Nazwisko </p>
+    <p>@Html.TextBoxFor(x => x.NazwiskoPracownika)</p>
+    <p>Haslo </p>
+    <p>@Html.PasswordFor(x => x.HasloPracownika)</p>
+
+    <input type="submit" value="Zaloguj" />
+}

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BibliotekaBazaModelStoreContainer" CdmEntityContainer="BibliotekaBazaEntities">
+    <EntitySetMapping Name="AutorKsiazki">
+      <EntityTypeMapping TypeName="BibliotekaBazaModel.AutorKsiazki">
+        <MappingFragment StoreEntitySet="AutorKsiazki">
+          <ScalarProperty Name="IdAutora" ColumnName="IdAutora" />
+          <ScalarProperty Name="ImieAutora" ColumnName="ImieAutora" />
+          <ScalarProperty Name="NazwiskoAutora" ColumnName="NazwiskoAutora" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Czytelnik">
+      <EntityTypeMapping TypeName="BibliotekaBazaModel.Czytelnik">
+        <MappingFragment StoreEntitySet="Czytelnik">
+          <ScalarProperty Name="IdCzytelnik" ColumnName="IdCzytelnik" />
+          <ScalarProperty Name="ImieCzytelnika" ColumnName="ImieCzytelnika" />
+          <ScalarProperty Name="NazwiskoCzytelnika" ColumnName="NazwiskoCzytelnika" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ksiazka">
+      <EntityTypeMapping TypeName="BibliotekaBazaModel.Ksiazka">
+        <MappingFragment StoreEntitySet="Ksiazka">
+          <ScalarProperty Name="IdKsiazki" ColumnName="IdKsiazki" />
+          <ScalarProperty Name="TytulKsiazki" ColumnName="TytulKsiazki" />
+          <ScalarProperty Name="Sygnatura" ColumnName="Sygnatura" />
+          <ScalarProperty Name="AutorKluczObcyId" ColumnName="AutorKluczObcyId" />
+          <ScalarProperty Name="CZyKsiazkaWypozyczona" ColumnName="CZyKsiazkaWypozyczona" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pracownik">
+      <EntityTypeMapping TypeName="BibliotekaBazaModel.Pracownik">
+        <MappingFragment StoreEntitySet="Pracownik">
+          <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
+          <ScalarProperty Name="ImiePracownika" ColumnName="ImiePracownika" />
+          <ScalarProperty Name="NazwiskoPracownika" ColumnName="NazwiskoPracownika" />
+          <ScalarProperty Name="HasloPracownika" ColumnName="HasloPracownika" />
+          <ScalarProperty Name="CzyZalogowanyPracownik" ColumnName="CzyZalogowanyPracownik" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WypozyczenieKsiazki">
+      <EntityTypeMapping TypeName="BibliotekaBazaModel.WypozyczenieKsiazki">
+        <MappingFragment StoreEntitySet="WypozyczenieKsiazki">
+          <ScalarProperty Name="IdWypozyczenieKsiazki" ColumnName="IdWypozyczenieKsiazki" />
+          <ScalarProperty Name="PracownikKluczObcyId" ColumnName="PracownikKluczObcyId" />
+          <ScalarProperty Name="CzytelnikKluczObcyId" ColumnName="CzytelnikKluczObcyId" />
+          <ScalarProperty Name="KsiazkaKluczObcyId" ColumnName="KsiazkaKluczObcyId" />
+          <ScalarProperty Name="CzyAktualnieWypozyczona" ColumnName="CzyAktualnieWypozyczona" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

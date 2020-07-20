@@ -1,0 +1,124 @@
+﻿@model List<WypozyczenieKsiazki>
+
+@{
+    ViewBag.Title = "ListaWypozyczen";
+    ViewBag.IdWypozyczenieKsiazki = new List<int>();
+    if (Session["IdPracownika"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+
+
+}
+
+<h2>ListaWypozyczen</h2>
+<button onclick="wypozyczone()">Książki wypozyczone</button>
+<button onclick="oddane()">Książki oddane</button>
+<h3 id="statusWypozyczenia"></h3>
+<table class="table table-hover">
+    <tbody>
+
+        @foreach (var a in Model)
+        {
+            <tr id="dane">
+                <td> Tytuł Książki: @a.Ksiazka.TytulKsiazki </td>
+                <td> Sygnatura Książki: @a.Ksiazka.Sygnatura</td>
+                <td> Autor Książki: @a.Ksiazka.AutorKsiazki.ImieAutora @a.Ksiazka.AutorKsiazki.NazwiskoAutora</td>
+                <td> Wypożyczjący Książke: @a.Czytelnik.ImieCzytelnika @a.Czytelnik.NazwiskoCzytelnika</td>
+                <td> Pracownik: @a.Pracownik.ImiePracownika @a.Pracownik.NazwiskoPracownika</td>
+                @if (a.CzyAktualnieWypozyczona == true)
+                {
+                    <td> Aktualnie wypożyczona</td>
+
+                    //  @Html.TextBoxFor(x => a.IdWypozyczenieKsiazki)
+                    //  @Html.TextBoxFor(x => a.KsiazkaKluczObcyId)
+
+
+
+            <td>
+                <i onclick="location.href='@Url.Action("ListaWypozyczenAktualizacja", "Home",
+                 new { idWypozyczenieKsiazki=a.IdWypozyczenieKsiazki, ksiazkaKluczObcyId=a.KsiazkaKluczObcyId })'" class="fas fa-trash red "></i>
+            </td>
+                }
+                else
+                {
+                    <td> Oddana</td>
+                }
+            <td hidden id="wartosc">@a.CzyAktualnieWypozyczona</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
+
+<script>
+    function wypozyczone() {
+        let a = document.querySelectorAll('[id=dane]');
+        let b = document.querySelectorAll('[id=wartosc]');
+
+        
+
+
+
+
+        for (let i = 0; i < a.length; i++) {
+            if (b[i].innerHTML == "False") {
+                a[i].hidden = true;
+               
+
+
+            }
+            else {
+                a[i].removeAttribute("hidden");
+               
+
+
+            }
+            
+        }
+
+        document.getElementById("statusWypozyczenia").innerText = "Aktualne wypożyczenia";
+
+    }
+
+    function oddane() {
+        let a = document.querySelectorAll('[id=dane]');
+
+        let b = document.querySelectorAll('[id=wartosc]');
+        
+
+        for (let i = 0; i < a.length; i++) {
+            if (b[i].innerHTML == "True") {
+                a[i].hidden = true;
+               
+
+
+            }
+            else {
+                a[i].removeAttribute("hidden");
+               
+
+
+            }
+            
+        }
+
+        document.getElementById("statusWypozyczenia").innerText = "Aktualne wypożyczenia";
+
+    }
+</script>
+
+<style>
+    .red {
+  color: red;
+  cursor: pointer;
+  
+}
+</style>
+
+
+
