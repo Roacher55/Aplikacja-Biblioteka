@@ -6,30 +6,50 @@
         Response.Redirect("~/Home/Login");
     }
 
-    
+
 
 }
 
 
 <h2>Lista Książek</h2>
 
+<button id="valButton" onclick="ukryj()">Wyszukaj</button>
+
+<div id="ukrytyDiv" hidden>
+    <p>Wyszukaj Książke</p>
+    <p>Tytuł Książki:</p>
+    <input id="szukajTytul" />
+    <p>Sygnatura książki:</p>
+    <input id="szukajSygnatura" />
+    <p></p>
+    <button onclick="znajdzKsiazka()">Znajdź Ksiazke</button>
+</div>
+
 <button onclick="wypozyczona()">Książki wypożyczone</button>
 <button onclick="nieWypozyczona()">Książka nie wypożyczona</button>
-<h3  id="status" ></h3>
+<h3 id="status"></h3>
 <table class="table table-hover">
-    <tbody >
+    <tbody>
 
-      
+
 
         @foreach (var k in Model)
         {
 
-            <tr>
-                <td class="tytul" > Tytuł: @k.TytulKsiazki  </td>
-                <td class="sygnatura" > Sygnatura: @k.Sygnatura</td>
-                <td hidden class="czyWypozyczona">@k.CZyKsiazkaWypozyczona</td>
+        <tr>
+            <td class="tytul">Tytuł: @k.TytulKsiazki</td>
+            <td class="sygnatura">Sygnatura: @k.Sygnatura</td>
+            @if (@k.CZyKsiazkaWypozyczona == true)
+            {
+                <td  class="czyWolna">Wypożyczona</td>
+            }
+            else
+            {
+                <td  class="czyWolna">Wolna</td>
+            }
+        <td hidden class="czyWypozyczona">@k.CZyKsiazkaWypozyczona</td>
 
-            </tr>
+        </tr>
         }
 
     </tbody>
@@ -39,69 +59,138 @@
     <input type="submit" value="Główna" />
 </form>
 
-     
+
 
 
 
 
 <script>
 
-    
+
 
 
 
     function wypozyczona() {
         let a = document.querySelectorAll('[class=tytul]');
-       
+
         let b = document.querySelectorAll('[class=sygnatura]');
 
         let c = document.querySelectorAll('[class=czyWypozyczona]');
-        
 
-        for (let i = 0; i < a.length; i++)
-        {
+        let d = document.querySelectorAll('[class=czyWolna]');
+
+
+        for (let i = 0; i < a.length; i++) {
             if (c[i].innerHTML == "False") {
                 a[i].hidden = true;
                 b[i].hidden = true;
+                d[i].hidden = true;
+
             }
             else {
-            a[i].removeAttribute("hidden");
-            b[i].removeAttribute("hidden");
+                a[i].removeAttribute("hidden");
+                b[i].removeAttribute("hidden");
+                d[i].removeAttribute("hidden");
             }
         }
         document.getElementById("status").innerText = "Książki Wypożyczone";
-       
+
     }
 
     function nieWypozyczona() {
         let a = document.querySelectorAll('[class=tytul]');
-      
+
         let b = document.querySelectorAll('[class=sygnatura]');
 
         let c = document.querySelectorAll('[class=czyWypozyczona]');
-        
-        for (let i = 0; i < a.length; i++)
-        {
+
+        let d = document.querySelectorAll('[class=czyWolna]');
+
+        for (let i = 0; i < a.length; i++) {
             if (c[i].innerHTML == "True") {
                 a[i].hidden = true;
                 b[i].hidden = true;
+                d[i].hidden = true;
             }
             else {
-            a[i].removeAttribute("hidden");
-            b[i].removeAttribute("hidden");
+                a[i].removeAttribute("hidden");
+                b[i].removeAttribute("hidden");
+                d[i].removeAttribute("hidden");
             }
         }
 
         document.getElementById("status").innerText = "Książki Nie Wypożyczone";
-         
+
     }
+
+
+
+
+
+
+      function znajdzKsiazka() {
+
+          var daneTytul = document.querySelectorAll('[class=tytul]');
+
+          var daneSygnatura = document.querySelectorAll('[class=sygnatura]');
+
+          var daneCzyWolna = document.querySelectorAll('[class=czyWolna]');
+
+        
+
+
+         
+        var tytul = "Tytuł: " + document.getElementById("szukajTytul").value;
+        var sygnatura = "Sygnatura: " + document.getElementById("szukajSygnatura").value;
+        //  document.getElementById("czyWypozyczona").innerHTML = false;
+
+       
+      
+          
+         for (let i = 0; i < daneTytul.length; i++) {
+             
+             if ((daneTytul[i].innerHTML == tytul && sygnatura == "Sygnatura: ") ||
+                 (tytul == "Tytuł: " && daneSygnatura[i].innerHTML == sygnatura) ||
+                 daneTytul[i].innerHTML == tytul && daneSygnatura[i].innerHTML == sygnatura) {
+                 daneTytul[i].hidden = false;
+                 daneSygnatura[i].hidden = false;
+                 daneCzyWolna[i].hidden = false; 
+                 
+             }
+             else {
+                 daneTytul[i].hidden = true;
+                 daneSygnatura[i].hidden = true;
+                 daneCzyWolna[i].hidden = true;
+                 
+                 
+             }
+
+
+             document.getElementById("status").innerText = "Wyniki wyszukania";
+
+
+
+            }
+
+
+
+
+
+        }
     
-
-   
-    
-
-
-
+    var a = false;
+    function ukryj() {
+        console.log("1");
+        document.getElementById('ukrytyDiv').hidden = a;
+        if (a == true) {
+            document.getElementById('valButton').innerHTML = "Wyszukaj";
+        }
+        else {
+     document.getElementById('valButton').innerHTML = "Ukryj Wyszukiwanie";
+        }
+        a = !a;
+        console.log(a);
+    }
 
 
 

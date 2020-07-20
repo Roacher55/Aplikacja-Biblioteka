@@ -2,14 +2,27 @@
 @{
     Layout = null;
 
-     if (Session["IdPracownika"] == null)
+    if (Session["IdPracownika"] == null)
     {
         Response.Redirect("~/Home/Login");
     }
 }
-<button onclick="uprawnienia()" >Kierwonicy biblioteki</button>
-<button onclick="nieUprawnienia()">Bibliotekarze</button>
+
 <h3>Lista Pracowników</h3>
+
+<button id="valButton" onclick="ukryj()">Wyszukaj</button>
+<button onclick="uprawnienia()">Kierwonicy biblioteki</button>
+<button onclick="nieUprawnienia()">Bibliotekarze</button>
+
+<div id="ukrytyDiv" hidden>
+    <p>Wyszukaj Czytelnika</p>
+    <p>Imie Czytelnika:</p>
+    <input id="szukajImie" />
+    <p>Nazwisko Czytelnika:</p>
+    <input id="szukajNazwisko" />
+    <p></p>
+    <button onclick="znajdzPracownika()">Znajdź Czytelnika</button>
+</div>
 
 <h3 id="tytulUprawnienia"></h3>
 <table class="table table-hover">
@@ -17,37 +30,37 @@
 
         @foreach (var p in Model)
         {
-        <tr>
-            <td id="imie"> Imię: @p.ImiePracownika </td>
-            <td id="nazwisko"> Nazwisko: @p.NazwiskoPracownika</td>
+            <tr>
+                <td id="imie">Imię: @p.ImiePracownika</td>
+                <td id="nazwisko">Nazwisko: @p.NazwiskoPracownika</td>
 
-            @if (p.CzyZalogowanyPracownik == true)
-            {
-                <td  id="uprawniony">Uprawniony</td>
+                @if (p.CzyZalogowanyPracownik == true)
+                {
+                    <td id="uprawniony">Uprawniony</td>
 
-            }
-            else
-            {
-                <td  id="uprawniony">Nie Uprawniony</td>
+                }
+                else
+                {
+                    <td id="uprawniony">Nie Uprawniony</td>
 
-            }
-        <td hidden id="uprawnienieWartosc">@p.CzyZalogowanyPracownik</td>
+                }
+                <td hidden id="uprawnienieWartosc">@p.CzyZalogowanyPracownik</td>
 
-        </tr>
+            </tr>
         }
 
     </tbody>
 </table>
 
-    <form action="https://localhost:44329/Home/Glowna">
-        <input type="submit" value="Główna" />
-    </form>
+<form action="https://localhost:44329/Home/Glowna">
+    <input type="submit" value="Główna" />
+</form>
 <script>
 
-    
+
     function uprawnienia() {
         let a = document.querySelectorAll('[id=imie]');
-       
+
         let b = document.querySelectorAll('[id=nazwisko]');
 
         let c = document.querySelectorAll('[id=uprawniony]');
@@ -55,60 +68,133 @@
         let d = document.querySelectorAll('[id=uprawnienieWartosc]');
 
 
-        
 
-        for (let i = 0; i < a.length; i++)
-        {
+
+        for (let i = 0; i < a.length; i++) {
             if (d[i].innerHTML == "False") {
                 a[i].hidden = true;
                 b[i].hidden = true;
                 c[i].hidden = true;
-              //  d[i].hidden = true;
+                //  d[i].hidden = true;
 
-                
+
             }
             else {
-            a[i].removeAttribute("hidden");
-            b[i].removeAttribute("hidden");
-            c[i].removeAttribute("hidden");
+                a[i].removeAttribute("hidden");
+                b[i].removeAttribute("hidden");
+                c[i].removeAttribute("hidden");
 
-         
+
             }
-            console.log("dziala");
-            console.log(c[i].innerHTML);
-            console.log(c[i].valueL);
+          //  console.log("dziala");
+          //  console.log(c[i].innerHTML);
+           // console.log(c[i].valueL);
         }
-        
+
         document.getElementById("tytulUprawnienia").innerText = "Pracownicy mogący dodawać osoby";
-       
+
     }
 
     function nieUprawnienia() {
         let a = document.querySelectorAll('[id=imie]');
-       
+
         let b = document.querySelectorAll('[id=nazwisko]');
         let c = document.querySelectorAll('[id=uprawniony]');
-      
-        
-        let d = document.querySelectorAll('[id=uprawnienieWartosc]');
-        
 
-        for (let i = 0; i < a.length; i++)
-        {
+
+        let d = document.querySelectorAll('[id=uprawnienieWartosc]');
+
+
+        for (let i = 0; i < a.length; i++) {
             if (d[i].innerHTML == "True") {
                 a[i].hidden = true;
                 b[i].hidden = true;
                 c[i].hidden = true;
             }
             else {
-            a[i].removeAttribute("hidden");
-            b[i].removeAttribute("hidden");
-            c[i].removeAttribute("hidden");
-            
+                a[i].removeAttribute("hidden");
+                b[i].removeAttribute("hidden");
+                c[i].removeAttribute("hidden");
+                
+
             }
         }
-        
+
         document.getElementById("tytulUprawnienia").innerText = "Pracownicy nie mogący dodawać osoby";
-       
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    function znajdzPracownika() {
+
+        var daneImie = document.querySelectorAll('[id=imie]');
+        var daneNazwisko = document.querySelectorAll('[id=nazwisko]');
+        var daneUprawniony = document.querySelectorAll('[id=uprawniony]');
+        var imie = "Imię: " + document.getElementById("szukajImie").value;
+        var nazwisko = "Nazwisko: " + document.getElementById("szukajNazwisko").value;
+        //  document.getElementById("czyWypozyczona").innerHTML = false;
+
+
+
+
+        for (let i = 0; i < daneImie.length; i++) {
+
+            if ((daneImie[i].innerHTML == imie && nazwisko == "Nazwisko: ") ||
+                (imie == "Imię: " && daneNazwisko[i].innerHTML == nazwisko) ||
+                daneImie[i].innerHTML == imie && daneNazwisko[i].innerHTML == nazwisko) {
+                daneImie[i].hidden = false;
+                daneNazwisko[i].hidden = false;
+                daneUprawniony[i].hidden = false;
+
+            }
+            else {
+                daneImie[i].hidden = true;
+                daneNazwisko[i].hidden = true;
+                daneUprawniony[i].hidden = true;
+              //  console.log("Tutaj");
+              //  console.log(daneImie[i].innerHTML);
+              //  console.log(imie);
+               // console.log(daneNazwisko[i].innerHTML);
+              //  console.log(nazwisko);
+              //  console.log(daneImie[i].innerHTML == imie && nazwisko == "Nazwisko: ");
+
+
+            }
+
+
+
+            document.getElementById("tytulUprawnienia").innerText = "Wyszukiwanie Pracownika";
+
+
+        }
+
+
+
+
+
+    }
+
+    var a = false;
+    function ukryj() {
+        console.log("1");
+        document.getElementById('ukrytyDiv').hidden = a;
+        if (a == true) {
+            document.getElementById('valButton').innerHTML = "Wyszukaj";
+        }
+        else {
+            document.getElementById('valButton').innerHTML = "Ukryj Wyszukiwanie";
+        }
+        a = !a;
+        console.log(a);
     }
 </script>
