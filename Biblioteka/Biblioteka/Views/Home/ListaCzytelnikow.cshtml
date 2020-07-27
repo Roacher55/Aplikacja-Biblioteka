@@ -28,6 +28,9 @@
             <tr id="dane">
                 <td id="imie">Imię: @c.ImieCzytelnika</td>
                 <td id="nazwisko">Nazwisko: @c.NazwiskoCzytelnika</td>
+                <td id="przycisk"> <input type="button" value="Podgląd" 
+                                          onclick="location.href='@Url.Action("ListaWypozyczenCzytelnik", "Home",
+                 new { czytelnik = c.IdCzytelnik })'" /></td>
 
             </tr>
         }
@@ -43,6 +46,7 @@
 
          var daneImie = document.querySelectorAll('[id=imie]');
          var daneNazwisko = document.querySelectorAll('[id=nazwisko]');
+         var przycisk = document.querySelectorAll('[id=przycisk]');
         var imie = "Imię: " + document.getElementById("szukajImie").value;
         var nazwisko = "Nazwisko: " + document.getElementById("szukajNazwisko").value;
         //  document.getElementById("czyWypozyczona").innerHTML = false;
@@ -57,13 +61,14 @@
                  daneImie[i].innerHTML == imie && daneNazwisko[i].innerHTML == nazwisko) {
                  daneImie[i].hidden = false;
                  daneNazwisko[i].hidden = false;
+                 przycisk[i].hidden = false;
                  
              }
              else {
                  daneImie[i].hidden = true;
                  daneNazwisko[i].hidden = true;
-                 console.log(daneImie[i].innerHTML)
-                 console.log(imie)
+                 przycisk[i].hidden = true;
+                 
                  
              }
 

@@ -41,13 +41,16 @@
             <td class="sygnatura">Sygnatura: @k.Sygnatura</td>
             @if (@k.CZyKsiazkaWypozyczona == true)
             {
-                <td  class="czyWolna">Wypożyczona</td>
+                <td class="czyWolna">Wypożyczona</td>
             }
             else
             {
-                <td  class="czyWolna">Wolna</td>
+                <td class="czyWolna">Wolna</td>
             }
-        <td hidden class="czyWypozyczona">@k.CZyKsiazkaWypozyczona</td>
+            <td class="podglad"><input type="button" value="Podgląd" 
+             onclick="location.href='@Url.Action("ListaWypozyczenKsiazka", "Home",
+             new { ksiazka = k.IdKsiazki })'"/></td>
+            <td hidden class="czyWypozyczona">@k.CZyKsiazkaWypozyczona</td>
 
         </tr>
         }
@@ -78,6 +81,7 @@
         let c = document.querySelectorAll('[class=czyWypozyczona]');
 
         let d = document.querySelectorAll('[class=czyWolna]');
+        let e = document.querySelectorAll('[class=podglad]');
 
 
         for (let i = 0; i < a.length; i++) {
@@ -85,12 +89,14 @@
                 a[i].hidden = true;
                 b[i].hidden = true;
                 d[i].hidden = true;
+                e[i].hidden = true;
 
             }
             else {
                 a[i].removeAttribute("hidden");
                 b[i].removeAttribute("hidden");
                 d[i].removeAttribute("hidden");
+                e[i].removeAttribute("hidden");
             }
         }
         document.getElementById("status").innerText = "Książki Wypożyczone";
@@ -106,16 +112,20 @@
 
         let d = document.querySelectorAll('[class=czyWolna]');
 
+        let e = document.querySelectorAll('[class=podglad]');
+
         for (let i = 0; i < a.length; i++) {
             if (c[i].innerHTML == "True") {
                 a[i].hidden = true;
                 b[i].hidden = true;
                 d[i].hidden = true;
+                e[i].hidden = true;
             }
             else {
                 a[i].removeAttribute("hidden");
                 b[i].removeAttribute("hidden");
                 d[i].removeAttribute("hidden");
+                e[i].removeAttribute("hidden");
             }
         }
 
@@ -136,6 +146,8 @@
 
           var daneCzyWolna = document.querySelectorAll('[class=czyWolna]');
 
+          var podglad = document.querySelectorAll('[class=podglad]');
+
         
 
 
@@ -154,13 +166,15 @@
                  daneTytul[i].innerHTML == tytul && daneSygnatura[i].innerHTML == sygnatura) {
                  daneTytul[i].hidden = false;
                  daneSygnatura[i].hidden = false;
-                 daneCzyWolna[i].hidden = false; 
+                 daneCzyWolna[i].hidden = false;
+                 podglad[i].hidden = false; 
                  
              }
              else {
                  daneTytul[i].hidden = true;
                  daneSygnatura[i].hidden = true;
                  daneCzyWolna[i].hidden = true;
+                 podglad[i].hidden = true; 
                  
                  
              }

@@ -18,6 +18,51 @@ namespace Biblioteka.Controllers
          //   db.Configuration.ProxyCreationEnabled = false;
             return View(db.WypozyczenieKsiazki.ToList());
         }
+
+        public ActionResult ListaWypozyczenCzytelnik(int czytelnik)
+        {
+
+            List<WypozyczenieKsiazki> czytelnikLista = new List<WypozyczenieKsiazki>();
+            foreach(var c in db.WypozyczenieKsiazki.ToList())
+            {
+                if(czytelnik == c.CzytelnikKluczObcyId)
+                {
+                    czytelnikLista.Add(c);
+                }
+            }
+            return View("ListaWypozyczen",czytelnikLista);
+        }
+
+        public ActionResult ListaWypozyczenKsiazka(int ksiazka)
+        {
+
+            List<WypozyczenieKsiazki> ksiazkaLista = new List<WypozyczenieKsiazki>();
+            foreach (var k in db.WypozyczenieKsiazki.ToList())
+            {
+                if (ksiazka == k.KsiazkaKluczObcyId)
+                {
+                    ksiazkaLista.Add(k);
+                }
+            }
+            return View("ListaWypozyczen", ksiazkaLista);
+        }
+
+        public ActionResult ListaWypozyczenPracownik(int pracownik)
+        {
+
+            List<WypozyczenieKsiazki> pracownikLista = new List<WypozyczenieKsiazki>();
+            foreach (var p in db.WypozyczenieKsiazki.ToList())
+            {
+                if (pracownik == p.PracownikKluczObcyId)
+                {
+                    pracownikLista.Add(p);
+                }
+            }
+            return View("ListaWypozyczen", pracownikLista);
+        }
+
+
+
         //[HttpPost]
         public ActionResult ListaWypozyczenAktualizacja(int idWypozyczenieKsiazki, int ksiazkaKluczObcyId)
         {

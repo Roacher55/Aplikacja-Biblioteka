@@ -44,6 +44,11 @@
                     <td id="uprawniony">Nie Uprawniony</td>
 
                 }
+                <td>
+                <input id="podglad" type="button" value="Podgląd"
+                onclick="location.href='@Url.Action("ListaWypozyczenPracownik", "Home",
+                 new { pracownik = p.IdPracownika })'"/>
+                </td>
                 <td hidden id="uprawnienieWartosc">@p.CzyZalogowanyPracownik</td>
 
             </tr>
@@ -66,6 +71,7 @@
         let c = document.querySelectorAll('[id=uprawniony]');
 
         let d = document.querySelectorAll('[id=uprawnienieWartosc]');
+        let e = document.querySelectorAll('[id=podglad]');
 
 
 
@@ -75,6 +81,7 @@
                 a[i].hidden = true;
                 b[i].hidden = true;
                 c[i].hidden = true;
+                e[i].hidden = true;
                 //  d[i].hidden = true;
 
 
@@ -83,6 +90,7 @@
                 a[i].removeAttribute("hidden");
                 b[i].removeAttribute("hidden");
                 c[i].removeAttribute("hidden");
+                e[i].removeAttribute("hidden");
 
 
             }
@@ -103,6 +111,7 @@
 
 
         let d = document.querySelectorAll('[id=uprawnienieWartosc]');
+        let e = document.querySelectorAll('[id=podglad]');
 
 
         for (let i = 0; i < a.length; i++) {
@@ -110,11 +119,13 @@
                 a[i].hidden = true;
                 b[i].hidden = true;
                 c[i].hidden = true;
+                e[i].hidden = true;
             }
             else {
                 a[i].removeAttribute("hidden");
                 b[i].removeAttribute("hidden");
                 c[i].removeAttribute("hidden");
+                e[i].removeAttribute("hidden");
                 
 
             }
@@ -140,6 +151,7 @@
         var daneImie = document.querySelectorAll('[id=imie]');
         var daneNazwisko = document.querySelectorAll('[id=nazwisko]');
         var daneUprawniony = document.querySelectorAll('[id=uprawniony]');
+        var podglad = document.querySelectorAll('[id=podglad]');
         var imie = "Imię: " + document.getElementById("szukajImie").value;
         var nazwisko = "Nazwisko: " + document.getElementById("szukajNazwisko").value;
         //  document.getElementById("czyWypozyczona").innerHTML = false;
@@ -155,12 +167,14 @@
                 daneImie[i].hidden = false;
                 daneNazwisko[i].hidden = false;
                 daneUprawniony[i].hidden = false;
+                podglad[i].hidden = false;
 
             }
             else {
                 daneImie[i].hidden = true;
                 daneNazwisko[i].hidden = true;
                 daneUprawniony[i].hidden = true;
+                podglad[i].hidden = true;
               //  console.log("Tutaj");
               //  console.log(daneImie[i].innerHTML);
               //  console.log(imie);
