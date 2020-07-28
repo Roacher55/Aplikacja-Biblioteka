@@ -1,0 +1,1 @@
+Aplikacje webowa pozwalająca wypożyczać książki czytelnikom przez Bibliotekarzy.
